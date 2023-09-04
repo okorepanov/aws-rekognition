@@ -1,0 +1,9 @@
+<%= form_tag images_path, multipart: true do %>
+  <div class="form-group">
+    <%= label_tag 'image', 'Upload Image' %>
+    <%= file_field_tag 'image', accept: 'image/*' %>
+  </div>
+
+  <%= submit_tag 'Upload' %>
+  </form>
+<% end %>

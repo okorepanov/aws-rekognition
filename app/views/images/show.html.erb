@@ -1,0 +1,18 @@
+<h1>Image <%= @image.id %></h1>
+
+<p>Owner: <%= @image.user.email %></p>
+<p>Description: <%= @image.description %></p>
+<%= image_tag(@image.image, alt: @image.description) if @image.image.attached? %>
+
+<h1>Suggested Content</h1>
+<% @image.similar_media.find_each do |media| %>
+  <p><%= media.type %> # <%= media.id %></p>
+  <p>Description: <%= media.description %></p>
+  <% if media.type == 'Image' %>
+    <%= image_tag(media.image, alt: media.description) if media.image.attached? %>
+  <% elsif media.type == 'Video' %>
+    <video width="320" height="240" controls>
+      <source src="<%= url_for(media.video) %>" type="video/mp4">
+    </video>
+  <% end %>
+<% end %>

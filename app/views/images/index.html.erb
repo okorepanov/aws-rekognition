@@ -1,0 +1,6 @@
+<% @images.find_each do |image| %>
+  <p>Image # <%= image.id %></p>
+  <p>Owner: <%= image.user.email %></p>
+  <p>Description: <%= image.description %></p>
+  <%= link_to(image_tag(image.image, alt: image.description, width: 300, height: 200), image_path(image)) if image.image.attached? %>
+<% end %>

@@ -1,0 +1,15 @@
+<h1>All the media</h1>
+<%= link_to 'Image Upload', new_image_path %>
+<%= link_to 'Video Upload', new_video_path %>
+
+<%= @medias.find_each do |media| %>
+  <p><%= media.type %> # <%= media.id %></p>
+  <p>Description: <%= media.description %></p>
+  <% if media.type == 'Image' %>
+    <%= image_tag(media.image, alt: media.description) if media.image.attached? %>
+  <% elsif media.type == 'Video' %>
+    <video width="320" height="240" controls>
+      <source src="<%= url_for(media.video) %>" type="video/mp4">
+    </video>
+  <% end %>
+<% end %>

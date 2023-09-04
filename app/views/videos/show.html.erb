@@ -1,0 +1,19 @@
+<h1>Video #<%= @video.id %></h1>
+<p><%= @video.description %></p>
+
+<video width="320" height="240" controls>
+  <source src="<%= url_for(@video.video) %>" type="video/mp4">
+</video>
+
+<h1>Suggested Content</h1>
+<% @video.similar_media.find_each do |media| %>
+  <p><%= media.type %> # <%= media.id %></p>
+  <p>Description: <%= media.description %></p>
+  <% if media.type == 'Image' %>
+    <%= image_tag(media.image, alt: media.description) if media.image.attached? %>
+  <% elsif media.type == 'Video' %>
+    <video width="320" height="240" controls>
+      <source src="<%= url_for(media.video) %>" type="video/mp4">
+    </video>
+  <% end %>
+<% end %>

@@ -1,0 +1,9 @@
+<%= form_tag videos_path, multipart: true do %>
+  <div class="form-group">
+    <%= label_tag 'video', 'Upload Video' %>
+    <%= file_field_tag 'video', accept: 'video/*' %>
+  </div>
+
+  <%= submit_tag 'Upload' %>
+  </form>
+<% end %>
