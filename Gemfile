@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
-ruby '2.7.8'
+ruby "3.1.4"
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'dotenv-rails'
 gem 'byebug'
 gem 'ruby-openai'
 gem 'liquid'
@@ -17,7 +17,8 @@ gem 'aws-sdk-sqs', '~> 1'
 gem 'rails', '~> 7.0.5'
 gem 'sprockets-rails'
 
-gem 'mysql2', '~> 0.5'
+# gem 'mysql2', '~> 0.5'
+gem 'pg'
 
 gem 'puma', '~> 5.0'
 

@@ -11,7 +11,7 @@
 .byebug_history
 
 # Env
-.env
+#.env
 
 # Ignore all logfiles and tempfiles.
 /log/*
