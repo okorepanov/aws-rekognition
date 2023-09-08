@@ -21,6 +21,7 @@ module Images
       image_record.image.attach(image)
 
       create_labels(image_record)
+      broadcast_image_creation(image_record)
 
       image_record
     end
@@ -43,6 +44,15 @@ module Images
       @detected_labels ||= MediaAnalyser
                              .detect_labels(image_bytes: image_bytes)
                              .labels
+    end
+
+    def broadcast_image_creation(image_record)
+      Turbo::StreamsChannel.broadcast_append_to(
+        'images',
+        target: 'images',
+        partial: 'images/image',
+        locals: { image: image_record }
+      )
     end
   end
 end

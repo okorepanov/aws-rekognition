@@ -1,6 +1,31 @@
-<% @images.find_each do |image| %>
-  <p>Image # <%= image.id %></p>
-  <p>Owner: <%= image.user.email %></p>
-  <p>Description: <%= image.description %></p>
-  <%= link_to(image_tag(image.image, alt: image.description, width: 300, height: 200), image_path(image)) if image.image.attached? %>
-<% end %>
+<%= turbo_stream_from 'images' %>
+
+<div id="images" class="flex flex-wrap justify-center">
+  <%= render partial: 'image', collection: @images %>
+</div>
+
+<div id="uploader" data-controller="uploader" class="flex justify-center py-4 italic">
+  <%= form_tag images_path, data: { action: 'uploader#formSubmit' }, multipart: true do %>
+    <%= label_tag 'image',
+                  'Choose Image',
+                  data: { uploader_target: 'pickerLabel' },
+                  class: 'bg-black bg-gradient-to-r from-gray-950 to-gray-500
+                          text-white font-semibold
+                          px-4 py-2 rounded
+                          cursor-pointer' %>
+    <%= file_field_tag 'image',
+                       accept: 'image/*',
+                       data: {
+                         uploader_target: 'picker',
+                         action: 'change->uploader#updateUploadButton'
+                       },
+                       class: 'hidden' %>
+    <%= submit_tag 'Upload',
+                   data: { uploader_target: 'uploader' },
+                   class: 'bg-black bg-gradient-to-r from-gray-950 to-gray-500
+                           text-white font-semibold
+                           px-4 py-2 rounded
+                           cursor-pointer',
+                   hidden: true %>
+  <% end %>
+</div>

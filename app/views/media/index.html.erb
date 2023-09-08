@@ -1,15 +1,28 @@
-<h1>All the media</h1>
-<%= link_to 'Image Upload', new_image_path %>
-<%= link_to 'Video Upload', new_video_path %>
+<div class="flex flex-wrap justify-center">
+  <%= render partial: 'media', collection: @media %>
+</div>
 
-<%= @medias.find_each do |media| %>
-  <p><%= media.type %> # <%= media.id %></p>
-  <p>Description: <%= media.description %></p>
-  <% if media.type == 'Image' %>
-    <%= image_tag(media.image, alt: media.description) if media.image.attached? %>
-  <% elsif media.type == 'Video' %>
-    <video width="320" height="240" controls>
-      <source src="<%= url_for(media.video) %>" type="video/mp4">
-    </video>
-  <% end %>
+<%= form_tag images_path, multipart: true, class: 'flex justify-center py-4 italic' do %>
+  <%= label_tag 'image',
+                'Choose Image',
+                class: 'bg-black bg-gradient-to-r from-gray-950 to-gray-500
+                        text-white font-semibold
+                        px-4 py-2 rounded
+                        cursor-pointer' %>
+  <%= file_field_tag 'image', accept: 'image/*', class: 'hidden' %>
+  <%= submit_tag 'Upload',
+                 data: { turbo_submits_with: 'Uploading' },
+                 class: 'bg-black bg-gradient-to-r from-gray-950 to-gray-500
+                         text-white font-semibold
+                         px-4 py-2 rounded
+                         cursor-pointer' %>
 <% end %>
+
+<div class="hidden flex justify-center py-4 italic">
+  <%= link_to "Media Upload",
+              new_image_path,
+              class: "bg-black bg-gradient-to-r from-gray-950 to-gray-500
+                      hover:scale-110 transition
+                      text-white font-semibold
+                      px-4 py-2 rounded" %>
+</div>

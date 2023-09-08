@@ -16,23 +16,23 @@ module Videos
     def call
       description = ::Ai::GenerateMediaDescription.call(labels: detected_labels, media_type: video.type)
 
-      create_labels(video)
-
       video.update!(
         description: description,
         analyzed: true,
         safe: true
       )
+
+      create_labels
     end
 
     private
 
-    def create_labels(video_record)
+    def create_labels
       detected_labels.each do |label|
         label = Label.create_or_find_by!(title: label.label.name)
 
         MediaLabel.create!(
-          media: video_record,
+          media: video,
           label: label,
           confidence: label[:confidence].to_i
         )

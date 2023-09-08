@@ -1,0 +1,22 @@
+
+<div id="<%= dom_id media %>" class="relative w-64 h-64 p-4">
+  <% case media.type %>
+  <% when 'Image' %>
+    <%= image_tag(media.image, alt: media.description, loading: :lazy, class: 'w-full h-full object-cover') %>
+  <% when 'Video' %>
+    <%= video_tag(url_for(media.video), controls: true, alt: media.description, class: 'w-full h-full object-cover') %>
+  <% end %>
+
+  <div class="opacity-0 hover:opacity-100
+              bg-gray-500 bg-opacity-50
+              text-white p-5
+              absolute inset-4
+              flex flex-col
+              items-center justify-center
+              transition duration-300">
+    <div class="max-h-64 overflow-y-auto italic top-0 mb-5">
+      <%= media.description %>
+    </div>
+    <%= link_to "View Media", image_path(media), data: { turbo_frame: '_top' }, class: 'text-white hover:underline italic absolute bottom-2' %>
+  </div>
+</div>

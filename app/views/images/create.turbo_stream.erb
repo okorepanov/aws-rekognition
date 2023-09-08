@@ -1,0 +1,3 @@
+<%= turbo_stream.append 'images' do %>
+  <%= render partial: 'images/image', locals: { image: @image } %>
+<% end %>

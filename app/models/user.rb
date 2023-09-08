@@ -5,4 +5,8 @@ class User < ApplicationRecord
 
   has_many :images
   has_many :videos
+
+  def media_count
+    images.count + videos.count
+  end
 end

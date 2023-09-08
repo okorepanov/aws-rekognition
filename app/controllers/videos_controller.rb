@@ -12,8 +12,4 @@ class VideosController < ApplicationController
 
     redirect_to media_path
   end
-
-  def show
-    @video = Video.find(params[:id])
-  end
 end

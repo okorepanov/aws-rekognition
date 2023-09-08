@@ -1,18 +1,33 @@
-<h1>Image <%= @image.id %></h1>
+<h1 class="text-2xl text-center font-semibold italic pb-4">Image <%= @image.id %></h1>
 
-<p>Owner: <%= @image.user.email %></p>
-<p>Description: <%= @image.description %></p>
-<%= image_tag(@image.image, alt: @image.description) if @image.image.attached? %>
+<div class="grid grid-cols-2 gap-4 pb-4">
+  <%= image_tag @image.image, alt: @image.description, class: 'w-9/12 w-9/12 m-auto' %>
 
-<h1>Suggested Content</h1>
-<% @image.similar_media.find_each do |media| %>
-  <p><%= media.type %> # <%= media.id %></p>
-  <p>Description: <%= media.description %></p>
-  <% if media.type == 'Image' %>
-    <%= image_tag(media.image, alt: media.description) if media.image.attached? %>
-  <% elsif media.type == 'Video' %>
-    <video width="320" height="240" controls>
-      <source src="<%= url_for(media.video) %>" type="video/mp4">
-    </video>
+  <div class="m-auto top-0">
+    <div class="italic pb-4">
+      <p class="text-xl font-semibold pb-2">Author</p>
+      <%= @image.user.email %>
+    </div>
+
+    <div class="pb-4">
+      <h2 class="text-xl font-semibold italic pb-2">Description</h2>
+      <div class="max-h-64 overflow-y-auto italic"><%= @image.description %></div>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-semibold italic pb-2">Labels</h2>
+      <div class="italic"><%= @image.labels.pluck(:title) %></div>
+    </div>
+  </div>
+
+  <% if @image.similar_media.present? %>
+    <%= turbo_stream_from 'suggested_content' %>
+
+    <div id="suggested_content" class="col-span-2">
+      <h2 class="text-xl font-semibold italic text-center pb-4">Suggested Content</h2>
+      <div class="flex flex-wrap justify-center">
+        <%= render partial: 'image', collection: @image.similar_media %>
+      </div>
+    </div>
   <% end %>
-<% end %>
+</div>

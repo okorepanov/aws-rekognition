@@ -1,0 +1,19 @@
+<div id="<%= dom_id image %>" class="relative w-64 h-64 p-4">
+  <%= image_tag(image.image, alt: image.description, loading: :lazy, class: 'w-full h-full object-cover') %>
+
+  <div class="opacity-0 hover:opacity-100
+              bg-gray-500 bg-opacity-50
+              text-white p-5
+              absolute inset-4
+              flex flex-col
+              items-center justify-center
+              transition duration-300">
+    <div class="max-h-64 overflow-y-auto italic top-0 mb-5">
+      <%= image.description %>
+    </div>
+    <div class="absolute bottom-2">
+      <%= link_to 'View', image_path(image), data: { turbo_frame: '_top' }, class: 'text-white hover:underline italic' %>
+      <%= link_to 'Destroy', image_path(image), data: { turbo_frame: '_top', turbo_method: :delete }, class: 'text-white hover:underline italic' %>
+    </div>
+  </div>
+</div>

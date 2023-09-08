@@ -2,6 +2,6 @@
 
 class MediaController < ApplicationController
   def index
-    @medias = Media.safe
+    @media = Image.safe # TODO: Temporary work with Images only
   end
 end
