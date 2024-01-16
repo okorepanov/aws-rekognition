@@ -30,7 +30,7 @@ module Images
 
     def create_labels(image_record)
       detected_labels.each do |label|
-        label = Label.create_or_find_by!(title: label[:name])
+        label = Label.find_or_create_by!(title: label[:name])
 
         MediaLabel.create!(
           media: image_record,
