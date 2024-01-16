@@ -14,7 +14,7 @@ module Ai
     end
 
     def call
-      ai_completion_request
+      ai_chat_request
     end
 
     private
@@ -31,7 +31,7 @@ module Ai
     end
 
     def model
-      MODELS[:completion_model]
+      MODELS[:chat_model]
     end
   end
 end
