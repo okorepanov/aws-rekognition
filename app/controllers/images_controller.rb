@@ -2,7 +2,7 @@
 
 class ImagesController < ApplicationController
   def index
-    @images = Image.safe
+    @images = Image.find_by_query(params[:query])
   end
 
   def create

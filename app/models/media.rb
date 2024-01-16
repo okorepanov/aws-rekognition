@@ -8,13 +8,22 @@ class Media < ApplicationRecord
 
   scope :safe, -> { where(safe: true) }
 
+  default_scope { safe }
+
   validates :type, :title, presence: true
 
+  class << self
+    def find_by_query(query)
+      return all if query.nil?
+
+      where('description LIKE :query or title LIKE :query', query: "%#{query}%")
+    end
+  end
+
   def similar_media
-    Media
-      .joins(:labels)
-      .where(labels: { title: self.labels.pluck(:title) })
-      .where.not(id: self.id)
+    joins(:labels)
+      .where(labels: { title: labels.pluck(:title) })
+      .where.not(id: id)
       .group('media.id')
       .order('COUNT(labels.id) DESC')
       .limit(5)
