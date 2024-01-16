@@ -49,6 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_063814) do
   end
 
   create_table "media", force: :cascade do |t|
+    t.string "title", null: false
     t.text "description"
     t.string "type", null: false
     t.boolean "analyzed", default: false, null: false

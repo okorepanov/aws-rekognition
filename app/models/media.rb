@@ -8,7 +8,7 @@ class Media < ApplicationRecord
 
   scope :safe, -> { where(safe: true) }
 
-  validates :type, presence: true
+  validates :type, :title, presence: true
 
   def similar_media
     Media

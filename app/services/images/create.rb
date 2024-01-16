@@ -15,9 +15,17 @@ module Images
     end
 
     def call
-      description = Ai::GenerateMediaDescription.call(labels: detected_labels, media_type: 'image')
+      analysed_image = Ai::GenerateMediaDescription.call(labels: detected_labels, media_type: 'image')
 
-      image_record = current_user.images.create!(description: description, safe: true, analyzed: true)
+      image_record = current_user
+                       .images
+                       .create!(
+                         title: analysed_image['title'],
+                         description: analysed_image['description'],
+                         safe: true,
+                         analyzed: true
+                       )
+
       image_record.image.attach(image)
 
       create_labels(image_record)
