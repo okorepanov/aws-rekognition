@@ -2,7 +2,10 @@
 
 class ImagesController < ApplicationController
   def index
-    @images = Image.find_by_query(params[:query])
+    @images = Media2::QuerySearch.call(
+                query: params[:query],
+                scope: Image
+              )
   end
 
   def create

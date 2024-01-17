@@ -3,15 +3,18 @@
 class MediaIndex < Chewy::Index
   settings analysis: {
     analyzer: {
-      email: {
-        tokenizer: 'keyword',
-        filter: ['lowercase']
+      html_field: {
+        type: 'custom',
+        char_filter: ['html_strip'],
+        tokenizer: 'standard',
+        filter: %w[lowercase trim]
       }
     }
   }
 
   index_scope Media.safe
 
+  field :id, type: 'integer'
   field :title
-  field :description
+  field :description, analyzer: 'html_field'
 end
