@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 class Media < ApplicationRecord
+  default_scope { safe }
+
   belongs_to :user
 
   has_many :media_labels, dependent: :destroy
   has_many :labels, through: :media_labels
 
+  validates :type, :title, presence: true
+
   scope :safe, -> { where(safe: true) }
 
-  default_scope { safe }
-
-  validates :type, :title, presence: true
+  update_index('media') { self }
 
   class << self
     def find_by_query(query)
@@ -21,7 +23,8 @@ class Media < ApplicationRecord
   end
 
   def similar_media
-    joins(:labels)
+    Media
+      .joins(:labels)
       .where(labels: { title: labels.pluck(:title) })
       .where.not(id: id)
       .group('media.id')
