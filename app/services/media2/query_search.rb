@@ -21,7 +21,7 @@ module Media2
     def call
       search_result_ids = search_results.pluck(:id)
 
-      scope.where(id: search_result_ids)
+      scope.in_order_of(:id, search_result_ids)
     end
 
     private
