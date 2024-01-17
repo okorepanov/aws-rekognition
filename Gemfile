@@ -3,6 +3,8 @@ git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
 ruby "3.1.4"
 
+gem 'faraday_middleware'
+
 # Environment variables
 gem 'dotenv-rails'
 
@@ -34,6 +36,7 @@ gem 'pg'
 
 # Elasticsearch
 gem 'chewy'
+# gem 'elasticsearch', '7.17.4'
 
 gem "tailwindcss-rails", "~> 2.0"
 

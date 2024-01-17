@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'faraday_middleware'
+
 module Images
   class Create
     attr_reader :image, :image_bytes, :current_user
