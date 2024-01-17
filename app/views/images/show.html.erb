@@ -1,4 +1,4 @@
-<h1 class="text-2xl text-center font-semibold italic pb-4">Image <%= @image.id %></h1>
+<h1 class="text-2xl text-center font-semibold italic pb-4"><%= @image.title %></h1>
 
 <div class="grid grid-cols-2 gap-4 pb-4">
   <%= image_tag @image.image, alt: @image.description, class: 'w-9/12 w-9/12 m-auto' %>
