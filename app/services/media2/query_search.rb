@@ -4,10 +4,10 @@ module Media2
   class QuerySearch
     attr_reader :query, :scope
 
-    SEARCH_FIELDS = %w[
-      title^2
-      description^1
-    ].freeze
+    BOOST_FIELDS = {
+      title: 2,
+      description: 1
+    }
 
     def self.call(query:, scope:)
       new(query: query, scope: scope).call
@@ -31,12 +31,30 @@ module Media2
 
       MediaIndex
         .query(
-          multi_match: {
-            query: query,
-            fields: SEARCH_FIELDS,
-            fuzziness: "AUTO"
+          bool: {
+            should: [
+              labels_search,
+              multi_match_search
+            ]
           }
         )
+    end
+
+    def labels_search
+      {
+        match: {
+          labels: query
+        }
+      }
+    end
+
+    def multi_match_search
+      {
+        multi_match: {
+          query: query,
+          fields: BOOST_FIELDS.map { |field, boost| "#{field}^#{boost}" }
+        }
+      }
     end
   end
 end

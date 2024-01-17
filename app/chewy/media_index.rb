@@ -17,4 +17,5 @@ class MediaIndex < Chewy::Index
   field :id, type: 'integer'
   field :title
   field :description, analyzer: 'html_field'
+  field :labels, value: ->(media) { media.labels.pluck(:title) }
 end
