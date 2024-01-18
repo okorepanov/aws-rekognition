@@ -52,7 +52,8 @@ module Media2
       {
         multi_match: {
           query: query,
-          fields: BOOST_FIELDS.map { |field, boost| "#{field}^#{boost}" }
+          fields: BOOST_FIELDS.map { |field, boost| "#{field}^#{boost}" },
+          fuzziness: 'AUTO'
         }
       }
     end
