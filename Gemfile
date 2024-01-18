@@ -3,11 +3,17 @@ git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
 ruby "3.1.4"
 
+# Payment processing
+gem "pay", "~> 7.0"
+gem "stripe", "~> 10.0"
+
+# Install gem due to Faraday :json type issue
 gem 'faraday_middleware'
 
 # Environment variables
 gem 'dotenv-rails'
 
+# Lock i18n due to chewy compatibility issue
 gem 'i18n', "~> 1.8.11"
 
 # OpenAI API integration
@@ -27,17 +33,17 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'aws-sdk-rekognition', '~> 1'
 gem 'aws-sdk-sqs', '~> 1'
 
+# Rails
 gem 'rails', '~> 7.0.5'
 gem 'sprockets-rails'
 
 # Database management
-# gem 'mysql2', '~> 0.5'
 gem 'pg'
 
 # Elasticsearch
 gem 'chewy'
-# gem 'elasticsearch', '7.17.4'
 
+# CSS
 gem "tailwindcss-rails", "~> 2.0"
 
 gem 'puma', '~> 5.0'
